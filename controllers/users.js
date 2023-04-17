@@ -20,7 +20,7 @@ module.exports.getCurrentUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        return next(new NotFoundError());
+        return next(new ValidationError());
       }
       return next(err);
     });
