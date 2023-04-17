@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
-const UnauthorizedError = require('../errors/unauthorized-error');
+const ForbiddenError = require('../errors/forbidden-error');
 const data = require('../errors/data');
+const NotFoundError = require('../errors/not-found-error');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -10,7 +11,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 2,
     maxlength: 30,
-    default: 'Noname',
   },
   email: {
     type: String,
@@ -39,17 +39,18 @@ userSchema.methods.removePassword = function () {
 userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password')
     .orFail(() => {
-      throw new UnauthorizedError();
+      throw new NotFoundError();
     })
     .then((user) => {
+      console.log(user);
       if (!user) {
-        return Promise.reject(new UnauthorizedError());
+        return new NotFoundError();
       }
 
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            return Promise.reject(new UnauthorizedError());
+            return Promise.reject(new ForbiddenError());
           }
           return user;
         });

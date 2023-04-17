@@ -5,6 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 
+const limiter = require('./middlewares/rate-limiter');
 const errorHandler = require('./errors/error-handler');
 const routes = require('./routes');
 const { DB_ADRESS, PORT_DEV } = require('./config');
@@ -13,6 +14,8 @@ const port = process.env.NODE_ENV !== 'production' ? PORT_DEV : process.env.PORT
 const DB = process.env.NODE_ENV !== 'production' ? DB_ADRESS : process.env.DB_ADRESS;
 
 const app = express();
+
+app.use(limiter);
 app.use(cors());
 
 mongoose

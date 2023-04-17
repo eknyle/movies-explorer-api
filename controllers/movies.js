@@ -17,7 +17,7 @@ module.exports.getMovies = (req, res, next) => {
 module.exports.addMovie = (req, res, next) => {
   const {
     country, director, duration, year, description, image,
-    trailerLink, nameRu, nameEn, thumbnail, movieId,
+    trailerLink, nameRU, nameEN, thumbnail, movieId,
   } = req.body;
 
   Movie.create({
@@ -28,8 +28,8 @@ module.exports.addMovie = (req, res, next) => {
     description,
     image,
     trailerLink,
-    nameRu,
-    nameEn,
+    nameRU,
+    nameEN,
     thumbnail,
     movieId,
     owner: req.user._id,
@@ -57,7 +57,7 @@ module.exports.deleteMovie = (req, res, next) => {
           .then((movie) => res.send(movie))
           .catch((err) => {
             if (err instanceof mongoose.Error.CastError) {
-              return next(new NotFoundError());
+              return next(new ValidationError());
             }
             return next();
           });
@@ -68,7 +68,7 @@ module.exports.deleteMovie = (req, res, next) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
-        return next(new NotFoundError());
+        return next(new ValidationError());
       }
       return next(err);
     });

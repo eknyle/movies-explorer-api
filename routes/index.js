@@ -14,26 +14,25 @@ router.use(requestLogger); // подключаем логгер запросов
 router.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(2),
+    password: Joi.string().required(),
   }),
 }), login);
 
 // создаёт пользователя с переданными в теле email, password и name
 router.post('/signup', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(2),
+    password: Joi.string().required(),
   }),
 }), createUser);
 
 router.use('/users', auth, userRouter);
 router.use('/movies', auth, movieRouter);
 
-router.use(errorLogger);
-
 router.use(auth, (req, res, next) => {
   next(new NotFoundError());
 });
+router.use(errorLogger);
 
 module.exports = router;

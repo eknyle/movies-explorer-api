@@ -35,7 +35,9 @@ module.exports.login = (req, res, next) => {
 
       res.send({ token });
     })
-    .catch((err) => next(err));
+    .catch((err) => {
+      next(err);
+    });
 };
 
 module.exports.createUser = (req, res, next) => {
@@ -78,6 +80,9 @@ module.exports.updateUser = (req, res, next) => {
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         return next(new ValidationError());
+      }
+      if (err.code === 11000) {
+        return next(new DuplicateError());
       }
       return next(err);
     });

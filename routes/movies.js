@@ -22,10 +22,10 @@ router.post('/', auth, celebrate({
     description: Joi.string().required(),
     image: Joi.string().required().regex(data.REG_EXP_URL),
     trailerLink: Joi.string().required().regex(data.REG_EXP_URL),
-    nameRu: Joi.string().required(),
-    nameEn: Joi.string().required(),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
     thumbnail: Joi.string().required().regex(data.REG_EXP_URL),
-    movieId: Joi.string().required().regex(data.REG_EXP_OID),
+    movieId: Joi.number().required(),
   }),
 }), addMovie);
 

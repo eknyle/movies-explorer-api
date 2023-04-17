@@ -2,25 +2,21 @@ const mongoose = require('mongoose');
 const data = require('../errors/data');
 
 const movieSchema = new mongoose.Schema({
-  nameRu: {
+  nameRU: {
     type: String,
     required: true,
-    minlength: 1,
   },
-  nameEn: {
+  nameEN: {
     type: String,
     required: true,
-    minlength: 1,
   },
   country: {
     type: String,
     required: true,
-    minlength: 2,
   },
   director: {
     type: String,
     required: true,
-    minlength: 2,
   },
   duration: {
     type: Number,
@@ -34,15 +30,13 @@ const movieSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
-    minlength: 2,
   },
   image: {
     type: String,
     required: true,
     validate: {
       validator(v) {
-        // eslint-disable-next-line
-        return /https?\:\/\/(www\.)?[\w\-\.\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]{1,256}\.[a-zA-Zа-яА-Я]{1,6}#?[\w\-\.\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]{1,256}/gi.test(v);
+        return /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&\/=]*)/gi.test(v);
       },
       message: `${data.VALIDATION_ERROR_MESSAGE}`,
     },
@@ -52,8 +46,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        // eslint-disable-next-line
-        return /https?\:\/\/(www\.)?[\w\-\.\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]{1,256}\.[a-zA-Zа-яА-Я]{1,6}#?[\w\-\.\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]{1,256}/gi.test(v);
+        return /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&\/=]*)/gi.test(v);
       },
       message: `${data.VALIDATION_ERROR_MESSAGE}`,
     },
@@ -63,8 +56,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        // eslint-disable-next-line
-        return /https?\:\/\/(www\.)?[\w\-\.\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]{1,256}\.[a-zA-Zа-яА-Я]{1,6}#?[\w\-\.\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]{1,256}/gi.test(v);
+        return /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&\/=]*)/gi.test(v);
       },
       message: `${data.VALIDATION_ERROR_MESSAGE}`,
     },
@@ -75,9 +67,8 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   movieId: {
-    type: String,
+    type: Number,
     required: true,
-    minlength: 2,
   },
 });
 
